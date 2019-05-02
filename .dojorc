@@ -1,0 +1,10 @@
+{
+	"build-app": {
+		"watchExtraFiles": ["src/**/*md"],
+		"build-time-render": {
+			"root": "app"
+		}
+	},
+	"test-intern": {},
+	"create-app": {}
+}
