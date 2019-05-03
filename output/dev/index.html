@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>btr-conf-example</title>
+	<meta name="theme-color" content="#222127">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="Description" content="Example of Dojo BTR and Blocks">
+<meta name="apple-mobile-web-app-title" content="dojo" /><meta name="apple-mobile-web-app-capable" content="yes" /><meta name="apple-mobile-web-app-status-bar-style" content="default" /><meta name="theme-color" content="#222127" /><link rel="apple-touch-icon" sizes="512x512" href="icon_512x512.4b938ed405cd7a04e8c706a0097e2bc5.png" /><link rel="apple-touch-icon" sizes="256x256" href="icon_256x256.c3399fc140e7b7ce69760eb55c9e94cd.png" /><link rel="apple-touch-icon" sizes="128x128" href="icon_128x128.3789c4a4f67429a0cd993c52d2c0d2a0.png" /><link rel="manifest" href="manifest.67cdad6c848768c7962ef91966ad84d8.json" /><meta name="mobile-web-app-capable" content="yes"><style>.hljs{background:#f0f0f0;color:#444}.hljs-keyword,.hljs-name{font-weight:700}.hljs-string{color:#800}.hljs-title{color:#800;font-weight:700}.hljs-built_in{color:#397300}.hljs-name,.hljs-tag{color:#d91e18}.hljs-built_in,.hljs-params{color:#aa5d00}.hljs-string{color:green}.hljs-title{color:#007faa}.hljs-keyword{color:#7928a1}.hljs{display:block;overflow-x:auto;background:#fefefe;color:#545454;padding:.5em}@media screen and (-ms-high-contrast:active){.hljs-built_in,.hljs-params,.hljs-string{color:highlight}.hljs-keyword{font-weight:700}}</style></head>
+<body>
+	<div id="app"><div><div><h1 id="btrandblocksconferencetalk">BTR and Blocks Conference Talk</h1>
+<p><a href="https://dojo.io">Dojo.io</a></p>
+<ul>
+<li>Cool</li>
+<li>Awesome</li>
+</ul>
+<h4 id="dojoblockforprocessingmarkdown">Dojo Block for processing markdown:</h4>
+<hr>
+<pre><code class="hljs ts language-ts"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> fs <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+<span class="hljs-keyword">import</span> { join } <span class="hljs-keyword">from</span> <span class="hljs-string">'path'</span>;
+<span class="hljs-keyword">import</span> { Converter } <span class="hljs-keyword">from</span> <span class="hljs-string">'showdown'</span>;
+<span class="hljs-keyword">const</span> highlight = <span class="hljs-built_in">require</span>(<span class="hljs-string">'showdown-highlight'</span>);
+
+<span class="hljs-keyword">const</span> mdConverter = <span class="hljs-keyword">new</span> Converter({ extensions: [highlight] });
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">const</span> content = fs.readFileSync(join(__dirname, <span class="hljs-string">'content'</span>, <span class="hljs-string">'blog.md'</span>), <span class="hljs-string">'utf8'</span>);
+    <span class="hljs-keyword">const</span> html = mdConverter.makeHtml(content);
+    <span class="hljs-keyword">return</span> html;
+}
+</code></pre>
+<h4 id="usingtheblockinawidget">Using the block in a widget:</h4>
+<hr>
+<pre><code class="hljs js language-js"><span class="hljs-keyword">import</span> WidgetBase <span class="hljs-keyword">from</span> <span class="hljs-string">'@dojo/framework/widget-core/WidgetBase'</span>;
+<span class="hljs-keyword">import</span> { tsx } <span class="hljs-keyword">from</span> <span class="hljs-string">'@dojo/framework/widget-core/tsx'</span>;
+<span class="hljs-keyword">import</span> Block <span class="hljs-keyword">from</span> <span class="hljs-string">'@dojo/framework/widget-core/meta/Block'</span>;
+
+<span class="hljs-keyword">import</span> markdown <span class="hljs-keyword">from</span> <span class="hljs-string">'./markdown.block'</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">WidgetBase</span> </span>{
+    protected render() {
+        <span class="hljs-keyword">const</span> content = <span class="hljs-keyword">this</span>.meta(Block).run(markdown)();
+
+        <span class="hljs-keyword">return</span> (
+            <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">innerHTML</span>=<span class="hljs-string">{content}</span> /&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        );
+    }
+}
+</span></code></pre></div></div></div>
+<link rel="stylesheet" href="bootstrap.css" media="none" onload="if(media!='all')media='all'" /><script type="text/javascript" src="bootstrap.js"></script></body>
+</html>
